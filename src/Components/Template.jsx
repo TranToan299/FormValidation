@@ -8,15 +8,20 @@ export default class Template extends Component {
       <header className="header bg-dark text-white">
         <div className="nav-link">
 
-        <NavLink to='/form' className={({isActive}) => isActive ?'text-info nav-link':'nav-link text-white' }>Form</NavLink>
+        <NavLink to='/form' className={({isActive}) => isActive ?'text-info nav-link':'nav-link text-white' }>Click vào đây để vào Form</NavLink>
         </div>
       </header>
-        <div className="content" style= {{
-          height:'95vh',
-        }}>
+        <section className="content" >
           <Outlet />
-        </div>
-        <footer className="footer bg-dark text-white">Footer</footer>
+        </section>
+      <footer className="bg-dark text-white d-block" style={{
+        position : 'absolute',
+        width:'100%',
+        bottom : '0',
+        height :'40px',
+        marginTop : '40px',
+
+      }}>Footer</footer>
       </>
     );
   }
