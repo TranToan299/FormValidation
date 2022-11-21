@@ -27,6 +27,32 @@ export default class FormValidation extends Component {
 
   };
 
+  handleUpdate = () => {
+    let {formValue,arrSinhVien} = this.state;
+    let svUpdate = arrSinhVien.find((sv)=>{
+      return sv.maSV === formValue.maSV
+    })
+    if( svUpdate) {
+      for (let key in svUpdate){
+        if (
+          key !== 'maSV'
+        ) {
+
+          svUpdate[key] = formValue[key]
+        }
+      }
+    }
+    console.log(svUpdate, arrSinhVien)
+    this.setState({
+      arrSinhVien:arrSinhVien,
+      formValue: 
+      {maSV: "",
+      soDT: "",
+      hoTen: "",
+      email: "",}
+    })
+  }
+
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -101,6 +127,24 @@ export default class FormValidation extends Component {
     );
   };
 
+  handleDel = (sinhvienClick) => {
+    let newArrSinhVien = this.state.arrSinhVien;
+    let indexDel =  newArrSinhVien.findIndex((sv)=>{
+      return sv.maSV === sinhvienClick 
+    })
+    newArrSinhVien.splice(indexDel,1)
+    this.setState({
+      arrSinhVien: newArrSinhVien,
+    })
+
+  }
+
+  handleEdit = (sv) => {
+    this.setState({
+      formValue: sv
+    })
+  }
+
   render() {
     return (
       <div className="container">
@@ -119,6 +163,7 @@ export default class FormValidation extends Component {
                   <div className="form-group">
                     <p>Mã SV</p>
                     <input
+                    value = {this.state.formValue.maSV}
                       name="maSV"
                       className="form-control"
                       data-type="number"
@@ -136,6 +181,7 @@ export default class FormValidation extends Component {
                   <div className="form-group">
                     <p>Số điện thoại</p>
                     <input
+                    value ={this.state.formValue.soDT}
                       name="soDT"
                       className="form-control"
                       data-type="number"
@@ -154,7 +200,7 @@ export default class FormValidation extends Component {
                 <div className="col-6">
                   <div className="form-group">
                     <p>Họ và tên</p>
-                    <input
+                    <input value= {this.state.formValue.hoTen}
                     data-type="text" 
                       name="hoTen"
                       className="form-control"
@@ -171,7 +217,7 @@ export default class FormValidation extends Component {
                   </div>
                   <div className="form-group">
                     <p>Email</p>
-                    <input
+                    <input value= {this.state.formValue.email}
                       data-type="email"
                       name="email"
                       className="form-control"
@@ -186,6 +232,7 @@ export default class FormValidation extends Component {
                       ""
                     )}
                   </div>
+             
                 </div>
               </div>
             </div>
@@ -193,14 +240,16 @@ export default class FormValidation extends Component {
               <button type="submit" className="btn btn-success my-2" disabled={!this.state.valid}>
                 Thêm sinh viên
               </button>
-              <button type="button" className="btn btn-danger my-2 ms-3">
+              <button type="button" className="btn btn-danger my-2 ms-3" onClick = {()=>{
+                this.handleUpdate()
+              }}>
                 Cập nhật sinh viên
               </button>
             </div>
           </div>
         </form>
         <div className="table-sinhvien my-4">
-          <TableSinhVien arr = {this.state.arrSinhVien}/>
+          <TableSinhVien arr = {this.state.arrSinhVien} DelSinhVien = {this.handleDel} handleEdit = {this.handleEdit}/>
         </div>
       </div>
     );

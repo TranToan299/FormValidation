@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 export default class TableSinhVien extends Component {
   renderSinhVien = (arr) => {
+    let {DelSinhVien, handleEdit} =this.props;
     return arr.map((sv, index) => {
       return (
         <tr key={index}>
@@ -10,11 +11,15 @@ export default class TableSinhVien extends Component {
           <td>{sv.soDT}</td>
           <td>{sv.email}</td>
           <td>
-            <button className="btn btn-success">
+            <button className="btn btn-success" onClick = {()=>{
+              DelSinhVien(sv.maSV)
+            }}>
             <i class="fa fa-trash-alt"></i>
 
             </button>
-            <button className="btn btn-danger ms-3">
+            <button className="btn btn-danger ms-3" onClick = {()=>{
+              handleEdit(sv)
+            }}>
 
             <i class="fa fa-edit "></i>
             </button>
@@ -26,7 +31,7 @@ export default class TableSinhVien extends Component {
 
   render() {
     let { arr } = this.props;
-    console.log(arr);
+
     return (
       <div className="">
         <table className="table text-center"  style={{
